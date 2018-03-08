@@ -1,11 +1,19 @@
+<?xml version="1.0"?>
 
 <resources>
-<string name="app_name">AndroidLabs</string>
-<string name="hello_message">Hello World!</string>
-<string name="ButtonText">I\'m a button</string>
-<string name="Login">Login</string>
-<string name="Password">Password</string>
-<string name="switchW">What does it do?</string>
-<string name="RadioButton">RadioButton</string>
-<string name="CheckBox">CheckBox</string>
+        <string name="app_name">AndroidLabs</string>
+        <string name="hello_message">Hello World!</string>
+        <string name="ButtonText">I\'m a button</string>
+        <string name="sendButton">Send</string>
+        <string name="login">Login</string>
+        <string name="password">Password</string>
+        <string name="switchMe">What does this do?</string>
+        <string name="LoginButton">Login</string>
+        <string name="dialog_message">Would you like to stop this activity?</string>
+        <string name="ok">OK</string>
+        <string name="cancel">Cancel</string>
+        <string name="dialog_title">Exit</string>
+        <string name="response">Here is my response</string>
+        <string name="chatButton">Start Chat</string>
+        <string name="editField">Write here</string>
 </resources>

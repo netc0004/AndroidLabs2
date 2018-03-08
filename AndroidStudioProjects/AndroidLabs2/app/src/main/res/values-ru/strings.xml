@@ -1,12 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <resources>
+
     <string name="app_name">AndroidLabs</string>
     <string name="hello_message">Привет!</string>
-    <string name="ButtonText">Кнопка</string>
-    <string name="Login">Войти</string>
-    <string name="Password">Пароль</string>
-    <string name="switchW">Что это делает?</string>
-    <string name="RadioButton">РадиоКнопка</string>
-    <string name="CheckBox">Проверить</string>
+    <string name="ButtonText">Я кнопка</string>
+    <string name="login">Вход</string>
+    <string name="password">Пароль</string>
+    <string name="switchMe">Что это делает?</string>
+    <string name="LoginButton">Войти</string>
+    <string name="dialog_message">Хотите завершить это?</string>
+    <string name="dialog_title">Выход</string>
+    <string name="ok">УГУ</string>
+    <string name="cancel">НЕ ХОЧУ</string>
+    <string name="response">Вот вам мой ответ</string>
+    <string name="chatButton">Начать разговор</string>
+    <string name="sendButton">Отправить</string>
+    <string name="editField">Пишем здесь</string>
+
 </resources>
+
