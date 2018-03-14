@@ -4,19 +4,19 @@
 
     <string name="app_name">AndroidLabs</string>
     <string name="hello_message">Привет!</string>
-    <string name="ButtonText">Я кнопка</string>
+    <string name="ButtonText">Кнопка</string>
     <string name="login">Вход</string>
     <string name="password">Пароль</string>
     <string name="switchMe">Что это делает?</string>
     <string name="LoginButton">Войти</string>
-    <string name="dialog_message">Хотите завершить это?</string>
+    <string name="dialog_message">Завершить?</string>
     <string name="dialog_title">Выход</string>
-    <string name="ok">УГУ</string>
-    <string name="cancel">НЕ ХОЧУ</string>
-    <string name="response">Вот вам мой ответ</string>
+    <string name="ok">Да</string>
+    <string name="cancel">Отменить</string>
+    <string name="response">Ответ</string>
     <string name="chatButton">Начать разговор</string>
     <string name="sendButton">Отправить</string>
-    <string name="editField">Пишем здесь</string>
+    <string name="editField">Пишите здесь</string>
 
 </resources>
 
