@@ -19,10 +19,10 @@ public class LoginActivity extends Activity {
         Log.i(ACTIVITY_NAME, "In onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         Button loginButton = findViewById(R.id.loginButton);
         final EditText emailInput = findViewById(R.id.emailInput);
         SharedPreferences prefs = getSharedPreferences("Lab3_UserInfo", Context.MODE_PRIVATE);
-
         final SharedPreferences.Editor editor = prefs.edit();
         emailInput.setText(prefs.getString("userEmail", "email@domain.com"));
 

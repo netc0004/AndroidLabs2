@@ -32,27 +32,25 @@ public class ListItemsActivity extends Activity {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
-
             }
-
         });
+
         final Context context = getApplicationContext();
         final Switch switchItem = (Switch) findViewById(R.id.switch1);
         switchItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean switchState) {
-
                 switchState = switchItem.isChecked();
-                if (switchItem.isChecked()==true) {
-                    CharSequence text= "Switch is ON";
-                    int duration= Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context , text, duration); //this is the ListActivity
-                    toast.show(); //display your message box
+                if (switchItem.isChecked() == true) {
+                    CharSequence text = "Switch is ON";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context , text, duration);
+                    toast.show();
                 } else {
-                    CharSequence text= "Switch is OFF";
-                    int duration= Toast.LENGTH_LONG;
-                    Toast toast = Toast.makeText(context, text, duration); //this is the ListActivity
-                    toast.show(); //display your message box
+                    CharSequence text = "Switch is OFF";
+                    int duration = Toast.LENGTH_LONG;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
             }
         });
@@ -61,11 +59,8 @@ public class ListItemsActivity extends Activity {
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean switchState) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(ListItemsActivity.this);
-// 2. Chain together various setter methods to set the dialog characteristics
-                builder.setMessage(R.string.dialog_message) //Add a dialog message to strings.xml
-
+                builder.setMessage(R.string.dialog_message)
                         .setTitle(R.string.dialog_title)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
@@ -78,15 +73,12 @@ public class ListItemsActivity extends Activity {
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
                             }
                         })
                         .show();
-
             }
         });
     }
-
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 

@@ -11,19 +11,19 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/textView"
         android:text="@string/hello_message"
-        android:id="@+id/textView"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/ButtonText"
         android:id="@+id/button"
+        android:text="@string/ButtonText"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="26dp"
         android:layout_marginStart="16dp"/>
@@ -31,11 +31,21 @@
     <Button
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/chatButton"
         android:id="@+id/chatButton"
+        android:text="@string/chatButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="17dp"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/weatherButton"
+        android:text="@string/weatherButton"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/chatButton"
+        android:layout_alignEnd="@+id/chatButton"
+        android:layout_marginTop="14dp"/>
 
 </android.support.constraint.ConstraintLayout>

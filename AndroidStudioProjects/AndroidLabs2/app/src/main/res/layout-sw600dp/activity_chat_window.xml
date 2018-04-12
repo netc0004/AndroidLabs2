@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.svetlana.androidlabs2.ChatWindow">
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editField"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_marginBottom="24dp"-->
+
+    <EditText
+        android:id="@+id/editField"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/sendButton"
+        android:text=""
+        tools:layout_width="300dp"/>
+
+    <!--android:inputType="textEmailAddress"-->
+    <!--android:layout_alignBottom="@+id/sendButton"-->
+    <!--tools:hint="write here"-->
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/listView"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/rel"
+        android:text="@string/sendButton"/>
+
+    <!--android:layout_marginBottom="17dp"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--android:layout_marginStart="16dp"-->
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/listView" >
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -17,6 +17,7 @@
     <string name="chatButton">Начать разговор</string>
     <string name="sendButton">Отправить</string>
     <string name="editField">Пишите здесь</string>
+    <string name="weatherButton">Прогноз погоды</string>
 
 </resources>
 

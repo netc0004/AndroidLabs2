@@ -12,8 +12,8 @@ import android.widget.Toast;
 public class StartActivity extends Activity {
 
     protected static final String ACTIVITY_NAME = "StartActivity";
+  //  TextView messageTextView;
 
-    TextView messageTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,11 +22,11 @@ public class StartActivity extends Activity {
 //        Intent i = getIntent();
         Button loginButton = findViewById(R.id.button);
         Button chatButton = findViewById(R.id.chatButton);
+        Button weatherButton = findViewById(R.id.weatherButton); // S
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent getResult = new Intent(StartActivity.this, ListItemsActivity.class);
                 startActivityForResult(getResult, 50);
             }
@@ -42,19 +42,25 @@ public class StartActivity extends Activity {
             }
 
         });
-    }
 
+        weatherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StartActivity.this, WeatherForecast.class);
+                startActivityForResult(intent, 50); // 5 ? Sv
+            }
+        });
+    }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         if (requestCode == 50) {
             Log.i(ACTIVITY_NAME, "Returned to StartActivity.onActivityResult");}
-
         if (resultCode == Activity.RESULT_OK) {
             String message = data.getStringExtra ("Response");
 
             int duration= Toast.LENGTH_LONG;
-            Toast toast = Toast.makeText(StartActivity.this, message, duration); //this is the ListActivity
+            Toast toast = Toast.makeText(StartActivity.this, message, duration);
             toast.show();
         }
     }

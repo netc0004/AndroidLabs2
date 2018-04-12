@@ -3,56 +3,58 @@ package com.example.svetlana.androidlabs2;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-import java.util.ArrayList;
 
 public class ChatWindow extends Activity {
     ListView listView;
     EditText editText;
     Button sendButton;
+    FrameLayout frameLayout;
     ArrayList<String> messages = new ArrayList<>();
 
     ChatAdapter messageAdapter;
     ChatDatabaseHelper helper;
     SQLiteDatabase database;
     ContentValues contentValues;
+    Cursor cursor;
     protected static final String ACTIVITY_NAME = "ChatWindow";
+
+    boolean isTablet = false;
+    MessageFragment messageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_window);
 
-        Resources resources = getResources();
+//        Resources resources = getResources();
         listView = (ListView)findViewById(R.id.listView);
         editText = (EditText)findViewById(R.id.editField);
         sendButton = (Button)findViewById(R.id.sendButton);
 
-
-       messageAdapter = new ChatAdapter( this );
+        messageAdapter = new ChatAdapter( this );
         listView.setAdapter (messageAdapter);
         helper = new ChatDatabaseHelper(this);
         database = helper.getWritableDatabase();
         contentValues = new ContentValues();
-
-
 
         final ChatAdapter chatAdapter = new ChatAdapter(this);
         listView.setAdapter(chatAdapter);
@@ -60,18 +62,53 @@ public class ChatWindow extends Activity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                messages.add(editText.getText().toString());
-                Log.i("*********Lab5 List", messages.toString());
-                messageAdapter.notifyDataSetChanged();
-                editText.setText("");
+                messages.add(editText.getText().toString());//
+                messageAdapter.notifyDataSetChanged(); //
+                editText.setText(""); //
                 contentValues.put(ChatDatabaseHelper.KEY_MESSAGE, messages.get(messages.size()-1));
-                database.insert(ChatDatabaseHelper.TABLE_NAME,"",contentValues);
+                database.insert(ChatDatabaseHelper.TABLE_NAME,"",contentValues); //
 
             }
 
         });
 
-        Cursor cursor = database.rawQuery("SELECT * FROM " + ChatDatabaseHelper.TABLE_NAME, null);
+        frameLayout = findViewById(R.id.frame); //new
+        if (frameLayout != null)
+            isTablet = true;
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                //Store bundle info
+                Bundle infoToPass = new Bundle();
+                infoToPass.putBoolean("isTablet", isTablet);
+                infoToPass.putLong("textID", messageAdapter.getId(position));
+                infoToPass.putString("textMessage", messages.get(position));
+
+
+                if (isTablet){//for a tablet
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    messageFragment  =  new MessageFragment();
+                    messageFragment.setArguments( infoToPass );
+                    ft.addToBackStack("Any name, not used"); //only undo FT on back button
+                    ft.replace( R.id.frame , messageFragment);
+                    ft.commit();
+
+                } else {//for a phone
+                    Intent phoneIntent = new Intent (ChatWindow.this, MessageDetails.class);
+                    phoneIntent.putExtras(infoToPass);
+                    startActivityForResult(phoneIntent, 50);
+                }
+            }
+        });
+
+
+
+
+        cursor = database.rawQuery("SELECT * FROM " + ChatDatabaseHelper.TABLE_NAME, null);
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast() ) {
@@ -82,11 +119,8 @@ public class ChatWindow extends Activity {
         }
 
         Log.i(ACTIVITY_NAME,"Cursor's column count =" + cursor.getColumnCount());
-
-//        for (int i = 0; i < cursor.getColumnCount(); i++){
-//            Log.i(ACTIVITY_NAME, cursor.getColumnName(i));
-//        }
         cursor.close();
+        messageAdapter.notifyDataSetChanged();
     }
 
     class ChatAdapter extends ArrayAdapter<String> {
@@ -113,15 +147,54 @@ public class ChatWindow extends Activity {
                 result = inflater.inflate(R.layout.chat_row_outgoing, null);
 
             TextView message = (TextView)result.findViewById(R.id.message_text);
-            Log.i("**************Lab5 Adap", message.toString());
             message.setText(getItem(position));
             return result;
         }
 
         public long getId(int position){
-            return position;
+            cursor = database.query(false, helper.TABLE_NAME, new String []
+                    {helper.KEY_ID, helper.KEY_MESSAGE}, null, null, null, null, null, null);
+            cursor.moveToPosition(position);
+            return cursor.getInt(cursor.getColumnIndex(helper.KEY_ID));
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 50) {
+            if (resultCode == Activity.RESULT_OK){
+                //update database
+                Bundle infoToPass = data.getExtras();
+                long ID = (long)infoToPass.get("ID");
+                deleteMessage(ID);
+            }
+        }
+    }
+
+    public void deleteMessage(long id){
+        database.delete(helper.TABLE_NAME, helper.KEY_ID +"=" +id, null);
+        refreshChat();
+        if (isTablet)
+            getFragmentManager().beginTransaction().remove(messageFragment).commit();
+    }
+
+    private void refreshChat(){
+        //reset chat lost
+        messages.clear();
+        cursor = database.query(false, helper.TABLE_NAME, new String [] {
+                helper.KEY_ID, helper.KEY_MESSAGE}, null, null, null, null, null, null);
+        String message;
+        if (cursor.moveToFirst()){
+            do {
+                message = cursor.getString(cursor.getColumnIndex(helper.KEY_MESSAGE));
+                messages.add(message);
+                Log.i(ACTIVITY_NAME, "SQL MESSAGE:" + message);
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
+        messageAdapter.notifyDataSetChanged();
+    }
 
     protected void onResume(){
         super.onResume();
